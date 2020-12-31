@@ -1,4 +1,4 @@
-package org.crinsonsn0w.Eureka.Server;
+package org.crimsonsn0w.EurekaServer;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
