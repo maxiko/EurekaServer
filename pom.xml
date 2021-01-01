@@ -9,14 +9,15 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>org.crinsonsn0w</groupId>
-	<artifactId>Eureka-Server</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
-	<name>Eureka-Server</name>
+	<artifactId>eurekaserver</artifactId>
+	<version>0.0.1</version>
+	<name>EurekaServer</name>
 	<description>Spring Boot Eureka Server</description>
 
 	<properties>
 		<java.version>11</java.version>
 		<spring-cloud.version>2020.0.0</spring-cloud.version>
+		<docker.repo>docker.io/maxiko</docker.repo>
 	</properties>
 
 	<dependencies>
@@ -105,5 +106,76 @@
 			<url>https://repo.spring.io/milestone</url>
 		</repository>
 	</repositories>
+
+	<profiles>
+		<profile>
+			<activation>
+				<os>
+					<family>windows</family>
+				</os>
+			</activation>
+			<id>jib-docker-windows</id>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>com.google.cloud.tools</groupId>
+						<artifactId>jib-maven-plugin</artifactId>
+						<version>2.7.0</version>
+						<configuration>
+							<to>
+								<image>${docker.repo}/${project.artifactId}:${project.version}</image>
+								<credHelper>wincred</credHelper>
+							</to>
+							<from>
+								<image>${docker.repo}/java-11-base-image:jdk11@sha256:e41d0cdc8ce215eddfa516b3e58a56a67dede8159041cd3d73b3af04a3f0f2e7</image>
+								<credHelper>wincred</credHelper>
+							</from>
+						</configuration>
+						<executions>
+							<execution>
+								<phase>package</phase>
+								<goals>
+									<goal>build</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+		<profile>
+			<activation>
+				<os>
+					<family>linux</family>
+				</os>
+			</activation>
+			<id>jib-docker</id>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>com.google.cloud.tools</groupId>
+						<artifactId>jib-maven-plugin</artifactId>
+						<version>2.7.0</version>
+						<configuration>
+							<to>
+								<image>${docker.repo}/${project.artifactId}:${project.version}</image>
+							</to>
+							<from>
+								<image>${docker.repo}/java-11-base-image:jdk11@sha256:e41d0cdc8ce215eddfa516b3e58a56a67dede8159041cd3d73b3af04a3f0f2e7</image>
+							</from>
+						</configuration>
+						<executions>
+							<execution>
+								<phase>package</phase>
+								<goals>
+									<goal>build</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
 
 </project>
